@@ -2,10 +2,9 @@ from flask import Flask, request
 from caesar import rotate_string
 
 app = Flask(__name__)
-app.config['DEBUG']=True
+app.config['DEBUG'] = True
 
-
-form = """
+form =  """
 <!DOCTYPE html>
 <html>
     <head>
@@ -26,32 +25,26 @@ form = """
         </style>
     </head>
     <body>
-		<form action = "/" method = "post">
-			Rotate by: 
-			<input name ="rot" type ="text" value = 0>
-			<br><br>
-			<textarea name = "text" rows="4" cols="50">{0}</textarea>
-			<br><br>
-			<input type ="submit">
-  
-		</form>
+        <form method='POST'>
+            <label>Rotate by:</label>
+            <input type="text" name="rot" value="0" />
+            <textarea name="text">{0}</textarea>
+            <input type="submit" value="Submit Query" />            
+        </form>
+    
     </body>
 </html>
-    """
+"""
 
 @app.route("/")
 def index():
-    return form.format("")
+    return form.format('')
 
-
-@app.route("/",methods = ['POST'])
+@app.route("/", methods=['POST'])
 def encrypt():
-    rotate= request.form['rot']
-    message=request.form['text']
-    jumble=rotate_string(message,rotate)
-    #return "<<h1>"+ jumble +"</h1>"
-    return form.format(jumble)
+    rots = int(request.form['rot'])
+    msg = request.form['text']
+    #e_msg = rotate_string(msg, rots)
+    return form.format(rotate_string(msg, rots))
 
-
-if __name__=="__main__":
-    app.run()
+app.run()
