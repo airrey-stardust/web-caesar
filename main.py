@@ -5,6 +5,7 @@ app = Flask(__name__)
 app.config['DEBUG'] = True
 
 form =  """
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -27,8 +28,11 @@ form =  """
     <body>
         <form method='POST'>
             <label>Rotate by:</label>
+
             <input type="text" name="rot" value="0" />
+
             <textarea name="text">{0}</textarea>
+
             <input type="submit" value="Submit Query" />            
         </form>
     
@@ -44,7 +48,7 @@ def index():
 def encrypt():
     rots = int(request.form['rot'])
     msg = request.form['text']
-    #e_msg = rotate_string(msg, rots)
+    
     return form.format(rotate_string(msg, rots))
 
 app.run()
